@@ -20,11 +20,12 @@ class TestClaudeAPI(unittest.TestCase):
         genai = claude_api.GenAI()
         
         system_msg = "you are a...."
-        resp_msg = genai.messages_create(system_msg, user_message="what is the meaning of life?")
+        resp_msg = genai.messages_create(system_msg, user_text="what is the meaning of life?")
 
         mock_create.assert_called_once_with(model='claude-3-5-sonnet-20240620', max_tokens=2048, 
                                             system=system_msg, 
-                                            messages=[{"role": "user", "content": "what is the meaning of life?"}])
+                                            messages=[{"role": "user", "content": "what is the meaning of life?"}],
+                                            temperature=1.0)
 
         resp_txt = claude_api.extract_text(resp_msg)
         
