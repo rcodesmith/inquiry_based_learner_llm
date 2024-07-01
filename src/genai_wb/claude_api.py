@@ -1,7 +1,7 @@
 from itertools import chain
 import os
 import json
-from typing import Iterable
+from typing import Iterable, Tuple
 from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
 from anthropic.types import Message, MessageParam
 
@@ -33,16 +33,24 @@ class GenAI:
         self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
     def messages_create(self, system, messages: Iterable[MessageParam] | None = None,
-                        user_text : str | None = None, temperature: float = 1.0) -> Message:
-        user_message_iterable : Iterable[MessageParam]= [{"role": "user", "content": user_text}] if user_text is not None else EMPTY_LIST
+                        message : MessageParam | None = None,
+                        user_text : str | None = None, temperature: float = 1.0) -> Tuple[Message, list[MessageParam]]:
+        
+        if message and user_text:
+            raise ValueError("Cannot provide both `message` and `user_text`")
+        
+        user_message_iterable : Iterable[MessageParam] = (
+            [{"role": "user", "content": user_text}] if user_text is not None else 
+            [message] if message else EMPTY_LIST
+        )
 
         messages_combined = list(chain(messages, user_message_iterable)) if messages is not None else user_message_iterable
 
         msg = self.client.messages.create(
             model=CLAUDE_MODEL,
             max_tokens=2048,
-            system=system, # <-- role prompt
+            system=system,
             messages=messages_combined,
             temperature=temperature
         )
-        return msg
+        return msg, messages_combined
