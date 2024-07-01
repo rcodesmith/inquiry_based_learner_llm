@@ -33,8 +33,8 @@ class GenAI:
         self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
     def messages_create(self, system, messages: Iterable[MessageParam] | None = None,
-                        user_message : str | None = None) -> Message:
-        user_message_iterable : Iterable[MessageParam]= [{"role": "user", "content": user_message}] if user_message is not None else EMPTY_LIST
+                        user_text : str | None = None, temperature: float = 1.0) -> Message:
+        user_message_iterable : Iterable[MessageParam]= [{"role": "user", "content": user_text}] if user_text is not None else EMPTY_LIST
 
         messages_combined = list(chain(messages, user_message_iterable)) if messages is not None else user_message_iterable
 
@@ -42,6 +42,7 @@ class GenAI:
             model=CLAUDE_MODEL,
             max_tokens=2048,
             system=system, # <-- role prompt
-            messages=messages_combined
+            messages=messages_combined,
+            temperature=temperature
         )
         return msg
