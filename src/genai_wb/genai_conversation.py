@@ -6,7 +6,6 @@ from anthropic.types import Message, MessageParam
 
 from genai_wb.claude_api import GenAI
 
-
 class GenAIConversation:
     genai_api: GenAI
 
