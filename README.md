@@ -5,6 +5,8 @@ the answers into a knowledge base.  The model is an inquiry-based learner using 
 generates questions based on some base information, which a person then answers.  The learner then switches roles and 
 answers questions based on the person's answers, in its own words.
 
+See [this blog post](https://medium.com/@rcodesmith/implementing-an-inquiry-based-learning-chatbot-ea5b01d8d364) for a walkthrough and
+more information.
 
 ## Setup
 
@@ -28,7 +30,9 @@ ANTHROPIC_API_KEY=your_api_key_here
 PYTHONPATH=$(pwd)/src:$PYTHONPATH jupyter notebook
 ```
 
-4. Open the `notebooks/claude_interaction.ipynb` file and start interacting with Claude!
+4. Open one of the notebooks listed under the Workbooks section below, and start running them!
+
+If you're using Vscode, it has a really good [Jupyter notebook mode](https://code.visualstudio.com/docs/datascience/jupyter-notebooks).
 
 ## Project Structure
 
