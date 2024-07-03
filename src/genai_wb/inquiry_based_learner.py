@@ -1,6 +1,5 @@
-from itertools import chain
 import json
-from typing import Iterable, TypedDict, cast
+from typing import TypedDict, cast
 
 from anthropic.types import Message, MessageParam
 
